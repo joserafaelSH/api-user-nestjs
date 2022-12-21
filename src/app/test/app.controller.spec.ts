@@ -1,9 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AppController } from './app.controller';
-import { AppRepository } from './app.repository';
-
-import { AppService } from './app.service';
-import { appServiceMock } from './app.service.mocks';
+import { AppController } from '../app.controller';
+import { AppService } from '../app.service';
+import { appServiceMock } from '../mocks/app.service.mocks';
 
 describe('AppController', () => {
     let appController: AppController;
@@ -12,27 +10,24 @@ describe('AppController', () => {
     beforeEach(async () => {
         const app: TestingModule = await Test.createTestingModule({
             controllers: [AppController],
-            providers: [
-                { provide: AppService, useValue: AppService },
-                { provide: AppRepository, useValue: AppRepository },
-            ],
+            providers: [{ provide: AppService, useValue: AppService }],
         }).compile();
 
         appController = app.get<AppController>(AppController);
     });
 
-    it('should be defined', () => {
+    it('AppController: should be defined', () => {
         expect(appController).toBeDefined();
     });
 
-    describe('getHello', () => {
+    describe('AppController: getHello', () => {
         beforeEach(() => {
             appController.getHello = jest.fn().mockReturnValue('Hello World!');
 
             appService.getHello = jest.fn();
         });
 
-        it('should return "Hello World!"', async () => {
+        it('AppController: should return "Hello World!"', async () => {
             expect(appController.getHello()).toBe('Hello World!');
         });
     });
